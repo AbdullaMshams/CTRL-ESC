@@ -12,7 +12,7 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: DefaultCompany
+  companyName: ProEscapers
   productName: CTRL-ESC
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
@@ -914,7 +914,7 @@ PlayerSettings:
   qnxGraphicConfPath: 
   apiCompatibilityLevel: 6
   captureStartupLogs: {}
-  activeInputHandler: 1
+  activeInputHandler: 2
   windowsGamepadBackendHint: 0
   cloudProjectId: 7c4b7164-56d3-4dc3-8a63-acdb6b6b1ad6
   framebufferDepthMemorylessMode: 0
