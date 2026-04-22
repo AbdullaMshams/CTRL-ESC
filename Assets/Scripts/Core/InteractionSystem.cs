@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 
+
 /// <summary>
 /// Handles player interaction with objects in the world.
 /// Uses raycast from the camera to detect interactable objects.
@@ -9,6 +10,7 @@ using TMPro;
 /// </summary>
 public class InteractionSystem : MonoBehaviour
 {
+private ExamineSystem examineSystem;
     [Header("Interaction Settings")]
     [SerializeField] private float interactionDistance = 2.5f;
     [SerializeField] private LayerMask interactableLayer;
@@ -32,6 +34,7 @@ public class InteractionSystem : MonoBehaviour
 
     private void Start()
     {
+
         // Auto find references if not assigned
         if (playerCamera == null)
             playerCamera = GetComponentInChildren<Camera>();
@@ -42,6 +45,8 @@ public class InteractionSystem : MonoBehaviour
         // Hide prompt on start
         if (interactionPromptUI != null)
             interactionPromptUI.SetActive(false);
+        
+    examineSystem = GetComponent<ExamineSystem>();
     }
 
     private void Update()
@@ -85,13 +90,15 @@ public class InteractionSystem : MonoBehaviour
     /// <summary>
     /// Checks for E key press and triggers interaction.
     /// </summary>
-    private void HandleInteractionInput()
+  private void HandleInteractionInput()
+{
+    if (examineSystem != null && examineSystem.IsExamining()) return;
+
+    if (Input.GetKeyDown(KeyCode.E) && isLookingAtInteractable && currentInteractable != null)
     {
-        if (Input.GetKeyDown(KeyCode.E) && isLookingAtInteractable && currentInteractable != null)
-        {
-            currentInteractable.Interact(this);
-        }
+        currentInteractable.Interact(this);
     }
+}
 
     /// <summary>
     /// Draws the crosshair on screen.

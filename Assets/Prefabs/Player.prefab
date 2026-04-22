@@ -149,6 +149,7 @@ GameObject:
   - component: {fileID: 364975277080731679}
   - component: {fileID: 622221697479164065}
   - component: {fileID: 5864079841454642464}
+  - component: {fileID: 8513631616692513526}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -238,6 +239,23 @@ MonoBehaviour:
   crosshairSize: 32
   interactionPromptUI: {fileID: 0}
   interactionPromptText: {fileID: 0}
+  playerCamera: {fileID: 6659241728251738199}
+  playerMovement: {fileID: 622221697479164065}
+--- !u!114 &8513631616692513526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7625825237094790887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31d6b30dbf98b4fea872a609d16d792c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  examineOverlay: {fileID: 0}
+  postProcessVolume: {fileID: 0}
+  rotateSpeed: 5
   playerCamera: {fileID: 6659241728251738199}
   playerMovement: {fileID: 622221697479164065}
 --- !u!1 &8091512609143867704
