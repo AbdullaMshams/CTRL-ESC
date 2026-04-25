@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using TMPro;
 
 public class InventoryManager : MonoBehaviour
 {
@@ -15,13 +14,20 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private Color normalSlotColor = new Color(0.2f, 0.2f, 0.2f, 0.8f);
     [SerializeField] private Color selectedSlotColor = new Color(0.4f, 0.7f, 1f, 0.9f);
 
+    [Header("Drop Settings")]
+    [SerializeField] private float dropDistance = 1.5f;
+    [SerializeField] private Camera playerCamera;
+
     private List<string> items = new List<string>();
     private List<Sprite> icons = new List<Sprite>();
+    private List<GameObject> itemObjects = new List<GameObject>();
     private int selectedSlot = 0;
 
     private void Awake()
     {
         Instance = this;
+        if (playerCamera == null)
+            playerCamera = Camera.main;
     }
 
     private void Update()
@@ -32,23 +38,17 @@ public class InventoryManager : MonoBehaviour
 
     private void HandleSlotSelection()
     {
-        // Press 1-6 to select slot
         for (int i = 0; i < 6; i++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
-            {
                 SelectSlot(i);
-            }
         }
     }
 
     private void HandleDrop()
     {
-        // Press G to drop selected item
-        if (Input.GetKeyDown(KeyCode.G))
-        {
+        if (Input.GetKeyDown(KeyCode.Q))
             DropSelectedItem();
-        }
     }
 
     private void SelectSlot(int index)
@@ -62,15 +62,31 @@ public class InventoryManager : MonoBehaviour
         for (int i = 0; i < slotBackgrounds.Count; i++)
         {
             if (slotBackgrounds[i] != null)
-            {
-                slotBackgrounds[i].color = i == selectedSlot 
-                    ? selectedSlotColor 
+                slotBackgrounds[i].color = i == selectedSlot
+                    ? selectedSlotColor
                     : normalSlotColor;
-            }
         }
     }
 
-    public bool AddItem(string itemName, Sprite icon)
+    public GameObject GetSelectedItemObject()
+{
+    if (selectedSlot >= itemObjects.Count) return null;
+    return itemObjects[selectedSlot];
+}
+
+public void RemoveSelectedItemTemporarily()
+{
+    if (selectedSlot >= items.Count) return;
+    // Just hide the icon — don't destroy the reference
+    itemIcons[selectedSlot].color = new Color(1, 1, 1, 0);
+    itemIcons[selectedSlot].sprite = null;
+    items.RemoveAt(selectedSlot);
+    icons.RemoveAt(selectedSlot);
+    itemObjects.RemoveAt(selectedSlot);
+    UpdateSlotVisuals();
+}
+
+    public bool AddItem(string itemName, Sprite icon, GameObject itemObject)
     {
         if (items.Count >= itemIcons.Count)
         {
@@ -80,6 +96,7 @@ public class InventoryManager : MonoBehaviour
 
         items.Add(itemName);
         icons.Add(icon);
+        itemObjects.Add(itemObject);
 
         int index = items.Count - 1;
         if (icon != null)
@@ -89,7 +106,6 @@ public class InventoryManager : MonoBehaviour
         }
         else
         {
-            // No icon — show white square placeholder
             itemIcons[index].color = new Color(1, 1, 1, 0.5f);
         }
 
@@ -108,15 +124,46 @@ public class InventoryManager : MonoBehaviour
         return null;
     }
 
+    private void DropSelectedItem()
+    {
+        if (selectedSlot >= items.Count) return;
+
+        string itemName = items[selectedSlot];
+        GameObject obj = itemObjects[selectedSlot];
+
+        // Respawn in front of player
+        if (obj != null)
+        {
+            Vector3 dropPosition = playerCamera.transform.position 
+                + playerCamera.transform.forward * dropDistance;
+            dropPosition.y = 0.5f; // slightly above ground
+
+            obj.transform.position = dropPosition;
+            obj.transform.rotation = Quaternion.identity;
+            obj.SetActive(true);
+
+            // Re-enable collider if it was disabled
+            Collider col = obj.GetComponent<Collider>();
+            if (col != null) col.enabled = true;
+        }
+
+        RemoveItemAt(selectedSlot);
+    }
+
     public void RemoveItem(string itemName)
     {
         int index = items.IndexOf(itemName);
         if (index == -1) return;
+        RemoveItemAt(index);
+    }
 
+    private void RemoveItemAt(int index)
+    {
         items.RemoveAt(index);
         icons.RemoveAt(index);
+        itemObjects.RemoveAt(index);
 
-        // Rebuild all slot visuals
+        // Rebuild visuals
         for (int i = 0; i < itemIcons.Count; i++)
         {
             if (i < items.Count)
@@ -130,14 +177,7 @@ public class InventoryManager : MonoBehaviour
                 itemIcons[i].color = new Color(1, 1, 1, 0);
             }
         }
-    }
 
-    private void DropSelectedItem()
-    {
-        if (selectedSlot >= items.Count) return;
-
-        string itemName = items[selectedSlot];
-        Debug.Log($"Dropped: {itemName}");
-        RemoveItem(itemName);
+        UpdateSlotVisuals();
     }
 }

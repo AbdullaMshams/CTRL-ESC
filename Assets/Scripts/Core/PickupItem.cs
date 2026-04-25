@@ -8,7 +8,7 @@ public class PickupItem : MonoBehaviour, IInteractable
 
     public void Interact(InteractionSystem interactor)
     {
-        bool added = InventoryManager.Instance.AddItem(itemName, itemIcon);
+        bool added = InventoryManager.Instance.AddItem(itemName, itemIcon, gameObject);
         if (added)
         {
             gameObject.SetActive(false);
