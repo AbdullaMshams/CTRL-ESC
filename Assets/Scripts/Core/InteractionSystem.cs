@@ -12,6 +12,7 @@ using UnityEngine.UI;
 public class InteractionSystem : MonoBehaviour
 {
     private ExamineSystem examineSystem;
+    private FocusSystem focusSystem;
     [Header("Interaction Settings")]
     [SerializeField] private float interactionDistance = 2.5f;
     [SerializeField] private LayerMask interactableLayer;
@@ -55,6 +56,7 @@ public class InteractionSystem : MonoBehaviour
         if (interactionPromptUI != null)
             interactionPromptUI.SetActive(false);
 
+        focusSystem = GetComponent<FocusSystem>();
         examineSystem = GetComponent<ExamineSystem>();
     }
 
@@ -102,17 +104,17 @@ public class InteractionSystem : MonoBehaviour
     /// <summary>
     /// Checks for E key press and triggers interaction.
     /// </summary>
-  private void HandleInteractionInput()
+private void HandleInteractionInput()
 {
-    // Completely ignore E if examining
     if (examineSystem != null && examineSystem.IsExamining()) return;
+    if (focusSystem != null && focusSystem.IsFocusing()) return;
 
-    if (Input.GetKeyDown(KeyCode.E) && isLookingAtInteractable && currentInteractable != null)
+    if (Input.GetKeyDown(KeyCode.E) && isLookingAtInteractable 
+        && currentInteractable != null)
     {
         currentInteractable.Interact(this);
     }
 }
-
 private void TryExamineInventoryItem()
 {
     if (InventoryManager.Instance == null) return;
