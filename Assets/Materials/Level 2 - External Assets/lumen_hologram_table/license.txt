@@ -1,0 +1,11 @@
+Model Information:
+* title:	Lumen hologram Table
+* source:	https://sketchfab.com/3d-models/lumen-hologram-table-da757533288a40a08e14e35339c581c7
+* author:	PolyPhantom (https://sketchfab.com/PolyPhantom)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Lumen hologram Table" (https://sketchfab.com/3d-models/lumen-hologram-table-da757533288a40a08e14e35339c581c7) by PolyPhantom (https://sketchfab.com/PolyPhantom) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

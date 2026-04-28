@@ -1,0 +1,47 @@
+fileFormatVersion: 2
+guid: 56ec34c5f8446f54389285e381e1df54
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 715df9372183c47e389bb6e19fbc3b52, type: 3}
+  editorImportSettings:
+    generateSecondaryUVSet: 0
+  importSettings:
+    nodeNameMethod: 1
+    animationMethod: 2
+    generateMipMaps: 1
+    texturesReadable: 0
+    defaultMinFilterMode: 9729
+    defaultMagFilterMode: 9729
+    anisotropicFilterLevel: 1
+  instantiationSettings:
+    mask: -1
+    layer: 0
+    skinUpdateWhenOffscreen: 1
+    lightIntensityFactor: 1
+    sceneObjectCreation: 2
+  assetDependencies:
+  - type: 0
+    originalUri: Assets\Materials\Level 2 - External Assets\lumen_hologram_table\scene.bin
+    assetPath: Assets\Materials\Level 2 - External Assets\lumen_hologram_table\scene.bin
+  - type: 1
+    originalUri: Assets\Materials\Level 2 - External Assets\lumen_hologram_table\textures\table_holi_baseColor.png
+    assetPath: Assets\Materials\Level 2 - External Assets\lumen_hologram_table\textures\table_holi_baseColor.png
+  - type: 1
+    originalUri: Assets\Materials\Level 2 - External Assets\lumen_hologram_table\textures\table_holi_metallicRoughness.png
+    assetPath: Assets\Materials\Level 2 - External Assets\lumen_hologram_table\textures\table_holi_metallicRoughness.png
+  - type: 1
+    originalUri: Assets\Materials\Level 2 - External Assets\lumen_hologram_table\textures\table_holi_emissive.jpeg
+    assetPath: Assets\Materials\Level 2 - External Assets\lumen_hologram_table\textures\table_holi_emissive.jpeg
+  - type: 1
+    originalUri: Assets\Materials\Level 2 - External Assets\lumen_hologram_table\textures\table_holi_normal.png
+    assetPath: Assets\Materials\Level 2 - External Assets\lumen_hologram_table\textures\table_holi_normal.png
+  reportItems:
+  - type: 2
+    code: 20
+    messages:
+    - KHR_materials_emissive_strength
