@@ -1,5 +1,7 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+
 
 /// <summary>
 /// Handles player interaction with objects in the world.
@@ -9,14 +11,21 @@ using TMPro;
 /// </summary>
 public class InteractionSystem : MonoBehaviour
 {
+    private ExamineSystem examineSystem;
+    private FocusSystem focusSystem;
     [Header("Interaction Settings")]
     [SerializeField] private float interactionDistance = 2.5f;
     [SerializeField] private LayerMask interactableLayer;
 
-    [Header("Crosshair Settings")]
-    [SerializeField] private Texture2D defaultCrosshair;
-    [SerializeField] private Texture2D interactCrosshair;
-    [SerializeField] private int crosshairSize = 32;
+    // [Header("Crosshair Settings")]
+    // [SerializeField] private Texture2D defaultCrosshair;
+    // [SerializeField] private Texture2D interactCrosshair;
+    // [SerializeField] private int crosshairSize = 32;
+
+    [Header("Crosshair")]
+    [SerializeField] private Image crosshairImage;
+    [SerializeField] private Color defaultCrosshairColor = Color.white;
+    [SerializeField] private Color interactCrosshairColor = Color.yellow;
 
     [Header("Interaction Prompt")]
     [SerializeField] private GameObject interactionPromptUI;
@@ -32,6 +41,7 @@ public class InteractionSystem : MonoBehaviour
 
     private void Start()
     {
+
         // Auto find references if not assigned
         if (playerCamera == null)
             playerCamera = GetComponentInChildren<Camera>();
@@ -39,15 +49,27 @@ public class InteractionSystem : MonoBehaviour
         if (playerMovement == null)
             playerMovement = GetComponent<PlayerMovement>();
 
+        if (crosshairImage != null)
+            crosshairImage.color = defaultCrosshairColor;
+
         // Hide prompt on start
         if (interactionPromptUI != null)
             interactionPromptUI.SetActive(false);
+
+        focusSystem = GetComponent<FocusSystem>();
+        examineSystem = GetComponent<ExamineSystem>();
     }
 
     private void Update()
     {
         HandleRaycast();
         HandleInteractionInput();
+    }
+
+    private void UpdateCrosshair(bool isLooking)
+    {
+        if (crosshairImage != null)
+            crosshairImage.color = isLooking ? interactCrosshairColor : defaultCrosshairColor;
     }
 
     /// <summary>
@@ -63,61 +85,60 @@ public class InteractionSystem : MonoBehaviour
         if (Physics.Raycast(ray, out hit, interactionDistance, interactableLayer))
         {
             IInteractable interactable = hit.collider.GetComponent<IInteractable>();
-
             if (interactable != null)
             {
-                // Looking at something interactable
                 currentInteractable = interactable;
                 isLookingAtInteractable = true;
-
-                // Show interaction prompt
                 ShowPrompt(interactable.GetInteractionPrompt());
+                UpdateCrosshair(true);
                 return;
             }
         }
 
-        // Not looking at anything interactable
         currentInteractable = null;
         isLookingAtInteractable = false;
         HidePrompt();
+        UpdateCrosshair(false);
     }
 
     /// <summary>
     /// Checks for E key press and triggers interaction.
     /// </summary>
-    private void HandleInteractionInput()
+private void HandleInteractionInput()
+{
+    if (examineSystem != null && examineSystem.IsExamining()) return;
+    if (focusSystem != null && focusSystem.IsFocusing()) return;
+
+    if (Input.GetKeyDown(KeyCode.E) && isLookingAtInteractable 
+        && currentInteractable != null)
     {
-        if (Input.GetKeyDown(KeyCode.E) && isLookingAtInteractable && currentInteractable != null)
-        {
-            currentInteractable.Interact(this);
-        }
+        currentInteractable.Interact(this);
     }
+}
+private void TryExamineInventoryItem()
+{
+    if (InventoryManager.Instance == null) return;
+
+    GameObject selectedObj = InventoryManager.Instance.GetSelectedItemObject();
+    if (selectedObj == null) return;
+
+    // Bring item out to examine
+    selectedObj.SetActive(true);
+    selectedObj.transform.position = playerCamera.transform.position 
+        + playerCamera.transform.forward * 0.5f;
+
+    PickupExamineItem pickupItem = selectedObj.GetComponent<PickupExamineItem>();
+    examineSystem.StartExamining(selectedObj, this, pickupItem);
+
+    // Remove from inventory temporarily while examining
+    InventoryManager.Instance.RemoveSelectedItemTemporarily();
+}
 
     /// <summary>
     /// Draws the crosshair on screen.
     /// Changes appearance when looking at interactable object.
     /// </summary>
-    private void OnGUI()
-    {
-        Texture2D crosshair = isLookingAtInteractable ? interactCrosshair : defaultCrosshair;
-
-        if (crosshair != null)
-        {
-            float x = (Screen.width  - crosshairSize) / 2f;
-            float y = (Screen.height - crosshairSize) / 2f;
-            GUI.DrawTexture(new Rect(x, y, crosshairSize, crosshairSize), crosshair);
-        }
-        else
-        {
-            // Fallback dot crosshair if no texture assigned
-            float x = (Screen.width  - 4) / 2f;
-            float y = (Screen.height - 4) / 2f;
-            Color color = isLookingAtInteractable ? Color.yellow : Color.white;
-            GUI.color = color;
-            GUI.DrawTexture(new Rect(x, y, 4, 4), Texture2D.whiteTexture);
-            GUI.color = Color.white;
-        }
-    }
+ 
 
     // ── Prompt Helpers ────────────────────────────────────────────────────────
 
