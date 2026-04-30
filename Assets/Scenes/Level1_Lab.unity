@@ -952,8 +952,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemName: Key
-  itemIcon: {fileID: 0}
-  promptText: Pick Up
+  itemIcon: {fileID: 21300000, guid: 644c887f5f545a7458c7ce743d05bcc7, type: 3}
+  promptText: Press E to Pick Up
 --- !u!65 &114714092
 BoxCollider:
   m_ObjectHideFlags: 0
