@@ -30,6 +30,7 @@ public class ExamineSystem : MonoBehaviour
     {
         if (!isExamining) return;
 
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -88,6 +89,20 @@ public class ExamineSystem : MonoBehaviour
 
         currentObject = obj;
         currentPickupItem = pickupItem;
+
+        if (pickupItem != null)
+        {
+            this.minZoomDistance = pickupItem.minZoom;
+            this.maxZoomDistance = pickupItem.maxZoom;
+            this.targetObjectSize = pickupItem.targetSize;
+            this.currentZoomDistance = pickupItem.startZoom;
+        }
+        else
+        {
+            // Fallback for objects without the script
+            this.currentZoomDistance = 1.0f;
+        }
+
         originalPosition = obj.transform.position;
         originalRotation = obj.transform.rotation;
         originalParent = obj.transform.parent;
@@ -96,10 +111,8 @@ public class ExamineSystem : MonoBehaviour
         // Calculate dynamic scale based on object bounds
         float objectSize = GetObjectSize(obj);
         float scaleFactor = targetObjectSize / objectSize;
-        obj.transform.localScale = originalScale * scaleFactor;
+        obj.transform.localPosition = new Vector3(0, 0, currentZoomDistance);
 
-        // Set initial zoom distance
-        currentZoomDistance = maxZoomDistance * 0.4f;
 
         // Move in front of camera
         obj.transform.SetParent(playerCamera.transform);

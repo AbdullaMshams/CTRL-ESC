@@ -13,6 +13,12 @@ public class PickupExamineItem : MonoBehaviour, IInteractable
     [SerializeField] private Sprite itemIcon;
     [SerializeField] private string examinePrompt = "Examine";
 
+    [Header("Examine Override Settings")] // Add these lines
+    public float minZoom = 0.5f;
+    public float maxZoom = 2.5f;
+    public float startZoom = 1.0f;
+    public float targetSize = 0.15f;
+
     private ExamineSystem examineSystem;
     private bool isBeingExamined = false;
 
