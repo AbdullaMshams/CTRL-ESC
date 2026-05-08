@@ -88,6 +88,7 @@ public void RemoveSelectedItemTemporarily()
 
     public bool AddItem(string itemName, Sprite icon, GameObject itemObject)
     {
+        itemName = itemName.Trim();
         if (items.Count >= itemIcons.Count)
         {
             Debug.Log("Inventory full!");
@@ -114,7 +115,7 @@ public void RemoveSelectedItemTemporarily()
 
     public bool HasItem(string itemName)
     {
-        return items.Contains(itemName);
+        return items.Contains(itemName.Trim()); 
     }
 
     public string GetSelectedItem()
@@ -152,7 +153,7 @@ public void RemoveSelectedItemTemporarily()
 
     public void RemoveItem(string itemName)
     {
-        int index = items.IndexOf(itemName);
+        int index = items.IndexOf(itemName.Trim());
         if (index == -1) return;
         RemoveItemAt(index);
     }
