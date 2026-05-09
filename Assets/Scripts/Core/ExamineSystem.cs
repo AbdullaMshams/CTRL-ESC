@@ -4,8 +4,13 @@ using System.Collections;
 public class ExamineSystem : MonoBehaviour
 {
     [Header("Examine Settings")]
-    [SerializeField] private float examineDistance = 1.5f;
     [SerializeField] private float rotateSpeed = 5f;
+
+    [Header("Zoom Settings")]
+    [SerializeField] private float minZoomDistance = 0.5f;
+    [SerializeField] private float maxZoomDistance = 2.5f;
+    [SerializeField] private float zoomSpeed = 0.3f;
+    [SerializeField] private float targetObjectSize = 0.15f;
 
     [Header("References")]
     [SerializeField] private Camera playerCamera;
@@ -16,6 +21,7 @@ public class ExamineSystem : MonoBehaviour
     private Quaternion originalRotation;
     private Transform originalParent;
     private Vector3 originalScale;
+    private float currentZoomDistance;
     private bool isExamining = false;
     private bool canInteract = false;
     private PickupExamineItem currentPickupItem;
@@ -27,6 +33,7 @@ public class ExamineSystem : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
+        // Rotate with right click
         if (Input.GetMouseButton(1))
         {
             float mouseX = Input.GetAxis("Mouse X") * rotateSpeed;
@@ -35,8 +42,23 @@ public class ExamineSystem : MonoBehaviour
             currentObject.transform.Rotate(Vector3.right, mouseY, Space.World);
         }
 
+        // Scroll to zoom
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll != 0f)
+        {
+            currentZoomDistance -= scroll * zoomSpeed;
+            currentZoomDistance = Mathf.Clamp(
+                currentZoomDistance, 
+                minZoomDistance, 
+                maxZoomDistance
+            );
+            currentObject.transform.localPosition = 
+                new Vector3(0, 0, currentZoomDistance);
+        }
+
         if (!canInteract) return;
 
+        // E — add to inventory
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (currentPickupItem != null)
@@ -50,6 +72,7 @@ public class ExamineSystem : MonoBehaviour
             }
         }
 
+        // Q — drop back
         if (Input.GetKeyDown(KeyCode.Q))
         {
             if (currentPickupItem != null)
@@ -70,9 +93,17 @@ public class ExamineSystem : MonoBehaviour
         originalParent = obj.transform.parent;
         originalScale = obj.transform.localScale;
 
-        obj.transform.localScale = originalScale * 0.4f;
+        // Calculate dynamic scale based on object bounds
+        float objectSize = GetObjectSize(obj);
+        float scaleFactor = targetObjectSize / objectSize;
+        obj.transform.localScale = originalScale * scaleFactor;
+
+        // Set initial zoom distance
+        currentZoomDistance = maxZoomDistance * 0.4f;
+
+        // Move in front of camera
         obj.transform.SetParent(playerCamera.transform);
-        obj.transform.localPosition = new Vector3(0, 0, examineDistance);
+        obj.transform.localPosition = new Vector3(0, 0, currentZoomDistance);
         obj.transform.localRotation = Quaternion.identity;
 
         isExamining = true;
@@ -84,6 +115,19 @@ public class ExamineSystem : MonoBehaviour
         StartCoroutine(EnableInteract());
     }
 
+    private float GetObjectSize(GameObject obj)
+    {
+        Renderer[] renderers = obj.GetComponentsInChildren<Renderer>();
+        if (renderers.Length == 0) return 1f;
+
+        Bounds bounds = renderers[0].bounds;
+        foreach (Renderer r in renderers)
+            bounds.Encapsulate(r.bounds);
+
+        // Return the largest dimension
+        return Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z);
+    }
+
     private IEnumerator EnableInteract()
     {
         yield return null;
@@ -93,44 +137,85 @@ public class ExamineSystem : MonoBehaviour
     }
 
     private void StopExamining(bool returnToPlace)
+{
+    if (!isExamining) return;
+
+    if (currentObject != null)
+        currentObject.transform.localScale = originalScale;
+
+    if (returnToPlace && currentObject != null)
     {
-        if (!isExamining) return;
+        currentObject.transform.SetParent(originalParent);
+        currentObject.transform.position = originalPosition;
+        currentObject.transform.rotation = originalRotation;
 
-        if (currentObject != null)
-            currentObject.transform.localScale = originalScale;
-
-        if (returnToPlace && currentObject != null)
+        Collider col = currentObject.GetComponent<Collider>();
+        if (col != null)
         {
-            currentObject.transform.SetParent(originalParent);
-            currentObject.transform.position = originalPosition;
-            currentObject.transform.rotation = originalRotation;
-
-            Collider col = currentObject.GetComponent<Collider>();
-            if (col != null)
-            {
-                col.enabled = false;
-                StartCoroutine(ReEnableCollider(col));
-            }
+            col.enabled = false;
+            StartCoroutine(ReEnableCollider(col));
         }
-        else if (currentObject != null)
+    }
+    else if (currentObject != null)
+    {
+        // Unparent and drop in front of player
+        currentObject.transform.SetParent(null);
+
+        // Position in front of player at waist height
+        Vector3 dropPos = playerCamera.transform.position 
+            + playerCamera.transform.forward * 0.8f;
+        dropPos.y -= 0.3f;
+        currentObject.transform.position = dropPos;
+
+        // Add rigidbody for drop physics
+        Rigidbody rb = currentObject.GetComponent<Rigidbody>();
+        if (rb == null)
+            rb = currentObject.AddComponent<Rigidbody>();
+        
+        rb.isKinematic = false;
+        rb.linearVelocity = Vector3.zero;
+
+        // Disable collider briefly then re-enable
+        Collider col = currentObject.GetComponent<Collider>();
+        if (col != null)
         {
-            currentObject.transform.SetParent(null);
+            col.enabled = false;
+            StartCoroutine(ReEnableCollider(col));
         }
 
-        isExamining = false;
-        canInteract = false;
-        currentPickupItem = null;
-        currentObject = null;
-
-        playerMovement.SetMovementLocked(false);
-        playerMovement.SetLookLocked(false);
+        // Remove rigidbody after it lands
+        StartCoroutine(RemoveRigidbody(rb));
     }
 
-    private IEnumerator ReEnableCollider(Collider col)
-    {
-        yield return new WaitForSeconds(0.3f);
-        if (col != null) col.enabled = true;
-    }
+    isExamining = false;
+    canInteract = false;
+    currentPickupItem = null;
+    currentObject = null;
+
+    playerMovement.SetMovementLocked(false);
+    playerMovement.SetLookLocked(false);
+}
+
+private IEnumerator RemoveRigidbody(Rigidbody rb)
+{
+    // Wait until it stops moving
+    yield return new WaitForSeconds(2f);
+    if (rb != null)
+        Destroy(rb);
+}
+
+private IEnumerator ReEnableCollider(Collider col)
+{
+    yield return new WaitForSeconds(0.8f);
+    if (col != null)
+        col.enabled = true;
+}
+
+    // private IEnumerator ReEnableCollider(Collider col)
+    // {
+    //     yield return new WaitForSeconds(0.3f);
+    //     if (col != null) col.enabled = true;
+    // }
 
     public bool IsExamining() => isExamining;
 }

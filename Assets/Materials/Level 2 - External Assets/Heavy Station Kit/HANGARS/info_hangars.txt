@@ -1,0 +1,62 @@
+﻿-------------
+DOCUMENTATION - https://dotteam.pro/pdf/Heavy_Station_Kit.pdf
+------------- 
+
+
+
+HEAVY STATION KIT
+
+--------------------
+H A N G A R S   2.50
+--------------------
+
+MODELING
+A new look for many objects. Flat surfaces were modified with less tris. Round ones like the railings received more. New objects were added to expand your opportunities for creative development.
+
+MAPPING
+To reduce drawcalls, most models were packaged into themes. Each theme uses a single material. Some UVs have a bit of free space, which has been reserved for future updates (thus adding new objects will not require additional materials).
+
+TEXTURING
+All the materials now have Metallic, Height and Occlusion maps, in addition to Albedo, Normal, and if it fits, Emission.
+
+SCRIPTING
+Earlier scripts have been corrected and expanded upon, and for widening the possibilities of the kit, new scripts have been created.
+
+Includes Hangars v1.20, PLUS:
+- New Materials
+- New Prefabs
+- Added Outside Theme
+- Added Gateway Script
+- Added Animated Textures
+
+--------------------
+H A N G A R S   1.20
+--------------------
+
+- Overall -50% tris from colliders. Colliders were redone for all prefabs, with box colliders and low poly mesh.
+- Added Top-Down support with new prefabs
+- Added Top-Down Demo Scene
+- Added Six New Objects as prefabs to Props
+- Added One New Object as prefab to Aggregates
+- Added One New Object as prefab to Support
+- Modified Light Source in some Wall prefabs
+- New Metal Material for all Prefabs (identical to one in Heavy Station Kit base)
+- New Skybox.
+
+--------------------
+H A N G A R S   1.10
+--------------------
+
+- Fixed compability issue with Sci-Fi Heavy Station Kit base.
+Previously, because of conflicted identical names of Meshes from different packages, these .fbx where overriding each other. Now names of such .fbx are modified so overriding no longer exists. Naming of corresponding Prefabs is not changed.
+- Dot FPC was modified to be exact copy of Dot FPC from in Heavy Station kit base.
+- Scripts that are necessary for compability were added.
+- No overriding happens at combining two Kits, so Console log is clean.
+- Info file was added to the package with Name and version of package as well as links to Forum, Web-site and e-mail.
+
+
+
+
+© 2016 DotTeam
+https://dotteam.pro
+info@dotteam.pro

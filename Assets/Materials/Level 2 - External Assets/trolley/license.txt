@@ -1,0 +1,11 @@
+Model Information:
+* title:	40k Armoury Tool Trolley DKOK
+* source:	https://sketchfab.com/3d-models/40k-armoury-tool-trolley-dkok-79479e2c6cd54a1db3b2f74a1c664675
+* author:	speckysimon (https://sketchfab.com/speckysimon)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "40k Armoury Tool Trolley DKOK" (https://sketchfab.com/3d-models/40k-armoury-tool-trolley-dkok-79479e2c6cd54a1db3b2f74a1c664675) by speckysimon (https://sketchfab.com/speckysimon) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
