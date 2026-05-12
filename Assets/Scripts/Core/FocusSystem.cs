@@ -125,6 +125,10 @@ private IEnumerator FocusCoroutine()
         playerMovement.SetMovementLocked(false);
         playerMovement.SetLookLocked(false);
     }
-
+    public void ForceStopFocusing()
+    {
+        StopAllCoroutines();
+        StartCoroutine(UnfocusCoroutine());
+    }
     public bool IsFocusing() => isFocusing;
 }
