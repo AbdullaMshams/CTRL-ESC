@@ -5526,11 +5526,11 @@ MonoBehaviour:
   invertRotation: 0
   sfxAudioSource: {fileID: 963040101}
   tickAudioSource: {fileID: 963040100}
-  tickSound: {fileID: 8300000, guid: 8de8711564c341a4686051d6faae923e, type: 3}
-  digitLockSound: {fileID: 8300000, guid: 2ea1e3db1f66a83479a9af716de4eac0, type: 3}
-  failSound: {fileID: 8300000, guid: 2285e11b09190004986a29322500458a, type: 3}
-  successSound: {fileID: 8300000, guid: b31f1a92037b15948a104edc9d87045b, type: 3}
-  tickVolume: 0.4
+  tickSound: {fileID: 8300000, guid: 3805ca8893792a34396ce6e56c114666, type: 3}
+  digitLockSound: {fileID: 8300000, guid: d0105f7674b4c0a45ad6c43fae720d1d, type: 3}
+  failSound: {fileID: 8300000, guid: 27febf274e66b564289b12d55f6578eb, type: 3}
+  successSound: {fileID: 8300000, guid: ae31403555a2e98469b034e493457371, type: 3}
+  tickVolume: 1
   hudRoot: {fileID: 877704893}
   currentPositionText: {fileID: 877704892}
   directionText: {fileID: 877704891}

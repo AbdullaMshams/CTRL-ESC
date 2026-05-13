@@ -254,10 +254,7 @@ public class VaultDialPuzzle : MonoBehaviour, IInteractable
     private void PlayTickSound()
     {
         if (tickSound == null || tickAudioSource == null) return;
-        tickAudioSource.Stop();
-        tickAudioSource.clip = tickSound;
-        tickAudioSource.volume = tickVolume;
-        tickAudioSource.Play();
+        tickAudioSource.PlayOneShot(tickSound, tickVolume);
     }
 
     private int GetCurrentPosition()

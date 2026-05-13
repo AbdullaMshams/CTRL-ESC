@@ -6933,14 +6933,10 @@ MonoBehaviour:
   handle: {fileID: 2133020114}
   handleRotation: -90
   handleRotationAxis: {x: 0, y: 0, z: 1}
-  handlePullDuration: 0.4
-  handleHoldDuration: 0.25
-  handleReturnDuration: 0.35
-  pauseBeforeDoorSlide: 0.2
   audioSource: {fileID: 0}
-  handleSound: {fileID: 0}
-  openSound: {fileID: 0}
-  closeSound: {fileID: 0}
+  handleSound: {fileID: 8300000, guid: f6dd843f8a9aad94581ecb4d7e989e7c, type: 3}
+  openSound: {fileID: 8300000, guid: 02ca6a947356a1b43880fa16c050cf60, type: 3}
+  closeSound: {fileID: 8300000, guid: ea0fac4223dcab34392a111f094ab067, type: 3}
   volume: 0.8
 --- !u!4 &1412428575 stripped
 Transform:
@@ -7478,10 +7474,10 @@ MonoBehaviour:
   shakeDuration: 0.3
   shakeMagnitude: 0.05
   audioSource: {fileID: 0}
-  buttonPressSound: {fileID: 0}
-  correctSound: {fileID: 0}
-  wrongSound: {fileID: 0}
-  sfxVolume: 0.8
+  buttonPressSound: {fileID: 8300000, guid: c20bcc49a24e2af499196bacdbad73ea, type: 3}
+  correctSound: {fileID: 8300000, guid: 9e656f1854f0ef149bc3eef646b9f74f, type: 3}
+  wrongSound: {fileID: 8300000, guid: 260d7134be5a89a45a73e9974a6a6bfd, type: 3}
+  sfxVolume: 0.9
   OnCodeCorrect:
     m_PersistentCalls:
       m_Calls:
@@ -10391,7 +10387,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1979431046}
-  m_Enabled: 0
+  m_Enabled: 1
 --- !u!4 &1979431051
 Transform:
   m_ObjectHideFlags: 0

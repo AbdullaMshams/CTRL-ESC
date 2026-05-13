@@ -27,28 +27,28 @@ public class SciFiDoorController : MonoBehaviour
     // ── Slide Settings ───────────────────────────────────────────────────────
     [Header("Slide Settings")]
     [SerializeField] private SlideAxis slideAxis = SlideAxis.LocalX;
-    [SerializeField] private float slideDistance = 1.5f;
+    [SerializeField] private float slideDistance = 2f;
     [SerializeField] private float slideDuration = 1.2f;
-    [SerializeField] private bool invertLeftDirection = false;
-    [SerializeField] private bool invertRightDirection = false;
+    [SerializeField] private bool invertLeftDirection = true;
+    [SerializeField] private bool invertRightDirection = true;
     [SerializeField] private bool useSmoothing = true;
 
     [Header("Hide Doors After Open (LEGACY)")]
     [Tooltip("LEGACY behavior — SetActive(false) after sliding. " +
              "Leave OFF when using the stencil-mask shader (recommended). " +
              "The stencil will clip the doors visually as they pass the frame.")]
-    [SerializeField] private bool hideDoorsAfterOpen = false;
+    [SerializeField] private bool hideDoorsAfterOpen = true;
     [SerializeField] private float hideDelay = 0.3f;
 
     // ── Handle (Optional) ────────────────────────────────────────────────────
-    [Header("Handle / Lever Animation (Optional)")]
+    [Header("Handle / Lever Animation")]
     [SerializeField] private Transform handle;
-    [SerializeField] private float handleRotation = -75f;
+    [SerializeField] private float handleRotation = -90f;
     [SerializeField] private Vector3 handleRotationAxis = Vector3.right;
-    [SerializeField] private float handlePullDuration = 0.4f;
-    [SerializeField] private float handleHoldDuration = 0.25f;
-    [SerializeField] private float handleReturnDuration = 0.35f;
-    [SerializeField] private float pauseBeforeDoorSlide = 0.2f;
+     private float handlePullDuration = 0.4f;
+     private float handleHoldDuration = 0.25f;
+    private float handleReturnDuration = 0.35f;
+    private float pauseBeforeDoorSlide = 0.2f;
 
     // ── Audio ────────────────────────────────────────────────────────────────
     [Header("Audio")]
