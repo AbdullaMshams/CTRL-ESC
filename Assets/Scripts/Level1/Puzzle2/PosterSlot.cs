@@ -89,4 +89,11 @@ public class PosterSlot : MonoBehaviour, IDropHandler
             slotImage.color = emptyColor;
         }
     }
+    
+    public void ResetSlot()
+    {
+        isFilled = false;
+        if (slotImage != null)
+            slotImage.color = emptyColor;
+    }
 }
