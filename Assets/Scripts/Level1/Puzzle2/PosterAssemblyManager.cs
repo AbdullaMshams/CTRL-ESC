@@ -17,7 +17,7 @@ public class PosterAssemblyManager : MonoBehaviour
     [SerializeField] private GameObject rightPanel;
     [SerializeField] private GameObject completedPosterPanel;
 
-    [Header("Completed Poster")]
+    [Header("Completed Poster UI")]
     [SerializeField] private Image completedPosterImage;
     [SerializeField] private TextMeshProUGUI urlText;
     [SerializeField] private string portalURL = "portal.nexusdynamics.internal";
@@ -25,9 +25,8 @@ public class PosterAssemblyManager : MonoBehaviour
     [Header("Close Button")]
     [SerializeField] private GameObject closeButton;
 
-    [Header("Assembled Poster Item")]
-    [SerializeField] private Sprite assembledPosterIcon;
-    [SerializeField] private GameObject assembledPosterObject;
+    [Header("Frame Reveal")]
+    [SerializeField] private GameObject posterRevealQuad; // The quad inside the frame
 
     private int placedCount = 0;
     private const int TOTAL = 4;
@@ -41,6 +40,10 @@ public class PosterAssemblyManager : MonoBehaviour
             urlText.text = "";
         if (closeButton != null)
             closeButton.SetActive(false);
+
+        // Make sure poster is hidden at start
+        if (posterRevealQuad != null)
+            posterRevealQuad.SetActive(false);
     }
 
     private void Update()
@@ -79,31 +82,27 @@ public class PosterAssemblyManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.8f);
 
-        // Hide assembly panels
+       
         if (leftPanel != null) leftPanel.SetActive(false);
         if (rightPanel != null) rightPanel.SetActive(false);
 
-        // Show completed poster panel
+        
         if (completedPosterPanel != null)
             completedPosterPanel.SetActive(true);
 
-        // Show URL text
+        
         if (urlText != null)
             urlText.text = portalURL;
 
-        // Show close button
+        
         if (closeButton != null)
             closeButton.SetActive(true);
 
-        // Add assembled poster to inventory
-        if (InventoryManager.Instance != null)
+        
+        if (posterRevealQuad != null)
         {
-            InventoryManager.Instance.AddItem(
-                "Assembled Poster",
-                assembledPosterIcon,
-                assembledPosterObject
-            );
-            Debug.Log("Assembled Poster added to inventory!");
+            posterRevealQuad.SetActive(true);
+            Debug.Log("Poster revealed in frame!");
         }
 
         Debug.Log($"Nexus Dynamics portal revealed: {portalURL}");
@@ -118,7 +117,7 @@ public class PosterAssemblyManager : MonoBehaviour
             ResetPieces();
         }
 
-        // Make sure panels are visible for next time
+        
         if (!puzzleSolved)
         {
             if (leftPanel != null) leftPanel.SetActive(true);
