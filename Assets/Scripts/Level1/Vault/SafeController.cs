@@ -12,6 +12,9 @@ public class SafeController : MonoBehaviour
     public float openAngle = 100f;
     public float animationSpeed = 2f;
 
+    [Header("Safe Body Collider")]
+    [SerializeField] private Collider safeBodyCollider;
+
     private bool isOpen = false;
 
     [ContextMenu("Open Safe")] // Allows you to test by right-clicking the component
@@ -57,5 +60,14 @@ public class SafeController : MonoBehaviour
             elapsed += Time.deltaTime * animationSpeed;
             yield return null;
         }
+        // 4. Disable the safe body collider
+        if (safeBodyCollider != null)
+            safeBodyCollider.enabled = false;
+
+        Collider[] allColliders = GetComponentsInChildren<Collider>();
+        foreach (Collider col in allColliders)
+            col.enabled = false;
+
+       
     }
 }
