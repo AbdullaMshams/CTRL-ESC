@@ -450,11 +450,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7525542989910814137, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.079
+      value: -1.408
       objectReference: {fileID: 0}
     - target: {fileID: -7525542989910814137, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.275
+      value: 0.623
       objectReference: {fileID: 0}
     - target: {fileID: -7525542989910814137, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -462,19 +462,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7525542989910814137, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.9999885
+      value: -0.99191666
       objectReference: {fileID: 0}
     - target: {fileID: -7525542989910814137, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -7525542989910814137, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7525542989910814137, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0047996636
+      value: -0.12689126
       objectReference: {fileID: 0}
     - target: {fileID: -7525542989910814137, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: -359.45
+      value: -345.42
       objectReference: {fileID: 0}
     - target: {fileID: -6689036041284674117, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_Name
@@ -490,15 +494,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2331241445012326383, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.028
+      value: -0.766
       objectReference: {fileID: 0}
     - target: {fileID: 2331241445012326383, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.112
+      value: 0.112
       objectReference: {fileID: 0}
     - target: {fileID: 2331241445012326383, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.726
+      value: -1.085
       objectReference: {fileID: 0}
     - target: {fileID: 2331241445012326383, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1028,15 +1032,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -9022080667574946777, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.367
+      value: 1.819
       objectReference: {fileID: 0}
     - target: {fileID: -9022080667574946777, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.513
+      value: -2.358
       objectReference: {fileID: 0}
     - target: {fileID: -9022080667574946777, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.065
+      value: -0.134
       objectReference: {fileID: 0}
     - target: {fileID: -9022080667574946777, guid: 7de7712cf3763ff458438d9152bb13dd, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2085,7 +2089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2895,7 +2899,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 100}
+  m_AnchoredPosition: {x: 0, y: 9}
   m_SizeDelta: {x: 595, y: 842}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1916799337
@@ -2911,7 +2915,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.34901962, g: 0.34901962, b: 0.34901962, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3010,6 +3014,12 @@ MonoBehaviour:
   sheetB: {fileID: 1861482987}
   sheetAStartPos: {x: 500, y: -229.8}
   sheetBStartPos: {x: 464, y: 156}
+  snapDistance: 250
+  sheetASnapOffset: {x: 0, y: -5}
+  sheetBSnapOffset: {x: 0, y: -10}
+  dragSound: {fileID: 0}
+  snapSound: {fileID: 0}
+  openSound: {fileID: 8300000, guid: c9734a7a1467f324fb33981a97af6144, type: 3}
 --- !u!1001 &1950672272
 PrefabInstance:
   m_ObjectHideFlags: 0
